@@ -34,40 +34,50 @@ if __name__ == "__main__":
     input_path = '/workspaces/PDFigCapX-TheXmassheep/input-pdf/'
     output_path = '/workspaces/PDFigCapX-TheXmassheep/output-pdf/'
     xpdf_path = output_path + 'xpdf/'
-    print("XPDF path \n" + xpdf_path)
+    print("XPDF path \n" + xpdf_path + "\n\n")
+
+    # Ensure the output directory exists
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+        print("Created output directory")
+
     log_file = output_path + 'log.text' # changed the last part of this line from '/log.text' to 'log.text'
-    f_log = open(log_file, 'w')
-    if not os.path.isdir(xpdf_path):
-        os.mkdir(xpdf_path)
-        print("MADE XPDF PATH")
-# Read each files in the input path
-    for pdf in os.listdir(input_path):
-        print("STARTED FILE LOOP")
-        if pdf.endswith('.pdf') and (not pdf.startswith('._')):
-            data = {}
-            print(input_path + pdf)
-            images = renderer.render_pdf(input_path + '/' + pdf)
-            print("images being set here")
-            data[pdf] = {}
-            data[pdf]['figures'] = []
-            data[pdf]['pages_annotated'] = []
-            pdf_flag = 0
-            print("worked until here")
-            try:
-                if not os.path.isdir(xpdf_path + pdf[:-4]):
-                    print("if statement triggered")
-                    # print(str(os.path(xpdf_path + pdf[:-4])))
-                    print()
-                    std_out = subprocess.check_output(
-                        ["exectuables/pdftohtml", input_path + '/' + pdf, xpdf_path + pdf[:-4] + '/'])
+    
+    with open(log_file, 'w') as f_log:
+        if not os.path.isdir(xpdf_path):
+            os.mkdir(xpdf_path)
+            print("MADE XPDF PATH")
+        # Read each files in the input path
+        for pdf in os.listdir(input_path):
+            print("STARTED FILE LOOP")
+            print(f"The PDF variable = {pdf} \n\n")
+            if pdf.endswith('.pdf') and (not pdf.startswith('._')):
+                data = {}
+                
+                print(input_path + pdf)
+                images = renderer.render_pdf(input_path + '/' + pdf)
+                print("images being set here")
+                data[pdf] = {}
+                data[pdf]['figures'] = []
+                data[pdf]['pages_annotated'] = []
+                pdf_flag = 0
+                print("worked until here")
+                try:
+                    if not os.path.isdir(xpdf_path + pdf[:-4]):
+                        print("if statement triggered")
+                        # print(str(os.path(xpdf_path + pdf[:-4])))
+                        print()
+                        std_out = subprocess.check_output(
+                            ["exectuables/pdftohtml", input_path + '/' + pdf, xpdf_path + pdf[:-4] + '/'])
+                    else:
+                        pdf_flag = 1
 
-            except:
-                print("\nWrong " + pdf + "\n")
-                f_log.write(pdf + '\n')
-                pdf_flag = 1
-            
-
-            
+                except:
+                    print("\nWrong " + pdf + "\n")
+                    f_log.write(pdf + '\n')
+                    pdf_flag = 1
+                
+            pdf_flag = 0    
             print("FuN TIMES")
             if pdf_flag == 0:
                 flag = 0
@@ -101,6 +111,20 @@ if __name__ == "__main__":
                     print("FIGURE " + figure)
                     page_no = int(figure[:-4][4:])
                     print("PAGE NO = "  + str(page_no))
+                    # Debugging snippet to help check the images list and page number
+                    print(f"Expected page number: {page_no}, Available images: {len(images)}")
+                    if page_no - 1 < len(images):
+                        page_fig = images[page_no - 2]
+                    else:
+                        print(f"Error: Tried to access page {page_no}, but only {len(images)} images are available.")
+                        # Optionally, skip or handle this error in some way, for example:
+                        page_fig = None  # Or handle it however fits your logic
+
+                    # Proceed with your logic after accessing the image
+                    if page_fig:
+                        # Do something with page_fig
+                        pass
+
                     page_fig = images[page_no - 1]
                     rendered_size = page_fig.size
 

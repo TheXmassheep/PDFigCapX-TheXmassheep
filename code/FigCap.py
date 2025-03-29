@@ -31,8 +31,8 @@ import time
 
 if __name__ == "__main__":
 
-    input_path = '/eecis/shatkay/homes/pengyuan/Documents/RESEARCH/PDFigCapX/code/sample_data_for_Juan'
-    output_path = '/eecis/shatkay/homes/pengyuan/Documents/RESEARCH/PDFigCapX/code/sample_data_for_Juan'
+    input_path = '/workspaces/PDFigCapX-TheXmassheep/input-pdf'
+    output_path = '/workspaces/PDFigCapX-TheXmassheep/output-pdf'
     xpdf_path = output_path +'/xpdf/'  
     log_file = output_path + '/log.text'
     f_log = open(log_file, 'w') 
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     for pdf in os.listdir(input_path):
         if pdf.endswith('.pdf') and (not pdf.startswith('._')):
             data = {}
-            print input_path+pdf
+            print(input_path+pdf)
             images = renderer.render_pdf(input_path + '/' + pdf)
             data[pdf] = {}
             data[pdf]['figures'] = []
@@ -50,7 +50,7 @@ if __name__ == "__main__":
             pdf_flag = 0
             try:
                 if not os.path.isdir(xpdf_path+pdf[:-4]):
-                    std_out = subprocess.check_output(["/usa/pengyuan/Documents/RESEARCH/PDFigCapX/xpdf-tools-linux-4.00/bin64/pdftohtml", input_path+'/'+pdf, xpdf_path+pdf[:-4]+'/'])
+                    std_out = subprocess.check_output(["/workspaces/PDFigCapX-TheXmassheep/exectuables/pdftohtml", input_path+'/'+pdf, xpdf_path+pdf[:-4]+'/'])
             except:
                 print "\nWrong "+pdf+"\n"
                 f_log.write(pdf+'\n')
