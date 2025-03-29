@@ -165,3 +165,23 @@ Modified:
   - possible solutions:
     - look more deeply into how the captions are identified. And possible increase the area from which these are looked for
     - see the features note on this in this readme -> ntry points for improvement.
+
+## Further work
+Where to find stuff:
+- finding the parts in the script where it loogs for specific text to identify images
+    - xpdf_process.py line 71
+
+
+## Changelog in Testing
+- extending the text its looking for works - moved the looking for maps part in line 71 in xpdf_process.py to the second if statement works
+- working with multiple pdfs seems to work - think further about the naming of the reports so that they can be processed automatically
+-  [ ] expand image bounding box
+
+- added installing imagemagick to the dockerfile for installing when creating the container:
+
+```docker
+# Install dependencies
+RUN apt-get -y update && apt-get install -y --no-install-recommends \
+    wget ghostscript ffmpeg libsm6 libxext6 gnupg gnupg2 unzip gsfonts-x11 imagemagick\
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+```

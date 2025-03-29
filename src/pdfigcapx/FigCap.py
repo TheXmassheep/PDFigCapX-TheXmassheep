@@ -102,8 +102,10 @@ if __name__ == "__main__":
                 data[pdf]['fig_no'] = info['fig_no_est']
 
                 output_file_path = output_path + '/' + pdf[:-4]
+                print("OUTPUT FILE PATH: " + output_file_path)
                 if not os.path.isdir(output_file_path):
                     os.mkdir(output_file_path)
+                    print(f"MADE OUTPUT PATH at {output_file_path}")
 
                 print("HELLO THERE")
                 print("length image list == " + str(len(images)))

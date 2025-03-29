@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 # Install dependencies
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
-    wget ghostscript ffmpeg libsm6 libxext6 gnupg gnupg2 unzip gsfonts-x11 \
+    wget ghostscript ffmpeg libsm6 libxext6 gnupg gnupg2 unzip gsfonts-x11 imagemagick\
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Miniconda

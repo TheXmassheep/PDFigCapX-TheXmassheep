@@ -48,10 +48,10 @@ def figures_captions_list(input_path, pdf, output_path):
     #print info['fig_no_est']
 
     #
-    # print no_of_figures
+    # print(no_of_figures)
     # if no_of_figures == no_of_caps:
     #     figures, cap_regions = same_no_caps_est(cap_box, fig_box, info, table_box, text_box)
-    #
+    
     r = info['png_ratio']
     # plt.close("all")
     # for i in range(info['page_no']):
@@ -64,7 +64,7 @@ def figures_captions_list(input_path, pdf, output_path):
     #                                  linewidth=1, edgecolor='g',
     #                                  facecolor='none')
     #         ax.add_patch(rect)
-    #
+    
     #     for each_fig in fig_box[page]:
     #         #each_fig = each_fig[0]
     #         rect = patches.Rectangle((each_fig[0]*r, each_fig[1]*r), each_fig[2]*r, each_fig[3]*r,

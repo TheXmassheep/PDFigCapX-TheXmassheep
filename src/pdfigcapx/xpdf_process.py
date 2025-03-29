@@ -67,8 +67,8 @@ def box_detection(html_file_path, info, html_boxes):
                 page_word_box.append([max(e[0][0] - info['row_height'], 0), e[0][1], e[0][2] + 2 * info['row_height'],
                                      e[0][3]])
                 if text.startswith('Table') or text.startswith('table') or text.startswith('Box'):
+                    table_cap_box.append([e[0][0], e[0][1], e[0][2], e[0][3]])
                 if text.startswith('Fig') or text.startswith('fig') or text.startswith('FIG') or text.startswith('Source') or text.startswith('source') or text.startswith('Map') or text.startswith('map'):
-                    table_cap_box.append([e[0][0], e[0][1], e[0][2], e[0][3]]):
                     # print text
                     text_box.append([e[0][0], e[0][1], e[0][2], e[0][3]])
                     cap_no_clue.append(text)
@@ -97,10 +97,17 @@ def box_detection(html_file_path, info, html_boxes):
             for cnt in contours:
                 bbox = cv2.boundingRect(cnt)
                 p_bbox = [int(float(x) / png_ratio) for x in bbox]
+
+                # expand bounding box
+                expand_factor = 0
+                p_bbox[0] = max(0, p_bbox[0] - int(p_bbox[2] * expand_factor))
+                p_bbox[1] = max(0, p_bbox[1] - int(p_bbox[3] * expand_factor))
+                p_bbox[2] = int(p_bbox[2] * (1 + 2 * expand_factor))
+                p_bbox[3] = int(p_bbox[3] * (1 + 2 * expand_factor))
+
                 box_image = 0
                 for caption_box in text_box:
-                    box_image = box_image + \
-                        overlap_ratio_based(caption_box, p_bbox)
+                    box_image = box_image + overlap_ratio_based(caption_box, p_bbox)
                 if box_image < 0.5:
                     cv2.drawContours(new_thresh, [cnt], 0, 255, -1)
 
