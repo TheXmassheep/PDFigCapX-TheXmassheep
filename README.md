@@ -185,3 +185,9 @@ RUN apt-get -y update && apt-get install -y --no-install-recommends \
     wget ghostscript ffmpeg libsm6 libxext6 gnupg gnupg2 unzip gsfonts-x11 imagemagick\
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 ```
+
+- some maps are still not being recognized which is an issue - dont know how to work around this - would need to look deeper into the following issues:
+    - bbox and caption bbox overlap settings
+    - expansion if that works
+
+- possible the jupyter notebook in the nb folder could be helpful but idk
